@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add an employee</div>
+        <div class="panel-body">
+            <form class="form" method="post" ng-submit="addEmployee()" name="addForm">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class="form-group">
+                            <label for="photo">Photograph </label>
+                            <div class="drop-box" ng-file-drop id="photo" ng-model="photo"
+                                 drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+                                 multiple="false" allow-dir="false"
+                                 accept="image/*"
+                                 ng-file-change="upload(photo)"
+                                 >
+                                 <!--popover="Drag n Drop photo here" popover-title="Photograph" popover-trigger="mouseenter" popover-placement="right">-->
+                                <div class="drop-box-no-border" bs-popover data-content="Drag n Drop photo here" data-title="Photograph" data-trigger="hover" data-placement="right">
+                                    <img class="img-photo img-rounded" ng-src="{{photoSrc}}" hidden="hidden"
+                                         onload="drawPhoto('photoCanvas', this, 200, 200)" />
+
+                                    <canvas id="photoCanvas" class="img-rounded" width="200" height="200" ng-hide="hidePhoto"></canvas>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-success' : addForm.email.$valid && addForm.email.$dirty, 'has-error' : addForm.email.$invalid && addForm.email.$dirty }">
+                            <label for="firstName">Basic Info</label>
+                            <input class="form-control" type="text" id="firstName" name="firstName" ng-model="firstName" placeholder="Enter first name" autofocus>
+                            <input class="form-control" type="text" name="lastName" ng-model="lastName" placeholder="Enter last name">
+                            <input class="form-control" type="email" name="email" ng-model="email" placeholder="Enter email" required>
+                            <div class="help-block text-danger" ng-if="addForm.email.$dirty" ng-messages="addForm.email.$error">
+                                <div ng-message="required">Email is required.</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="twitter">Social Info</label>
+                            <input class="form-control" type="url" id="twitter" name="twitter" ng-model="twitter" placeholder="Enter twitter url">
+                            <input class="form-control" type="url" name="linkedIn" ng-model="linkedIn" placeholder="Enter linkedIn url">
+                            <input class="form-control" type="url" name="facebook" ng-model="facebook" placeholder="Enter facebook url">
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <label for="skills">Skills</label>
+                        <textarea class="form-control textarea-small" id="skills" name="skills" ng-model="skills" placeholder="Enter skills here" rows="14"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="overview">Overview</label>
+                            <textarea class="form-control textarea-long" id="overview" name="overview" ng-model="overview" placeholder="Enter overview" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-1">
+                        <div class="form-group">
+                            <p></p>
+                            <button class="btn btn-primary" type="submit" id="btnAdd" ng-disabled="addForm.$invalid">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

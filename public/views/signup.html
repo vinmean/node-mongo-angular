@@ -1,0 +1,30 @@
+<div class="container">
+    <br />
+
+    <div class="row">
+        <div class="center-form panel">
+            <form method="post" ng-submit="signup()" name="signupForm">
+                <div class="panel-body">
+                    <h2 class="text-center">Sign up</h2>
+
+                    <div class="form-group"
+                         ng-class="{ 'has-success' : signupForm.signUpCode.$valid && signupForm.signUpCode.$dirty, 'has-error' : signupForm.signUpCode.$invalid && signupForm.signUpCode.$dirty }">
+                        <input class="form-control input-lg" type="number" id="signUpCode"
+                               name="signUpCode" ng-model="signUpCode" placeholder="Sign Up Code" required
+                               autofocus>
+
+                        <div class="help-block text-danger" ng-if="signupForm.signUpCode.$dirty"
+                             ng-messages="signupForm.signUpCode.$error">
+                            <div ng-message="required">Sign Up code is required.</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" ng-disabled="signupForm.$invalid"
+                            class="btn btn-lg btn-block btn-primary">
+                        Proceed
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

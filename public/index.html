@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="EmpApp">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EmployeeTracker</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link href="stylesheets/style.css" rel="stylesheet">
+</head>
+<body>
+    <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top"
+         role="navigation" bs-navbar>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">
+                <span class="glyphicon glyphicon-user"></span>
+                Employee<strong>Tracker</strong>
+            </a>
+        </div>
+        <ul class="nav navbar-nav" ng-if="currentUser">
+            <li data-match-route="/$"><a href="/">Home</a></li>
+            <li data-match-route="/add"><a href="/add">Add</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" ng-if="currentUser">
+            <li class="navbar-text" ng-bind="currentUser.email"></li>
+            <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
+        </ul>
+    </div>
+
+    <div ng-view></div>
+
+    <script src="vendor/angular.min.js"></script>
+
+    <script src="vendor/angular-strap.min.js"></script>
+    <script src="vendor/angular-strap.tpl.min.js"></script>
+
+    <script src="vendor/angular-messages.min.js"></script>
+    <script src="vendor/angular-resource.min.js"></script>
+    <script src="vendor/angular-route.min.js"></script>
+    <script src="vendor/angular-cookies.min.js"></script>
+    <script src="vendor/angular-file-upload-all.min.js"></script>
+    <script src="vendor/moment.min.js"></script>
+
+    <script src="client-app.js"></script>
+
+    <script src="controllers/client-main.js"></script>
+    <script src="controllers/client-add.js"></script>
+    <script src="controllers/client-detail.js"></script>
+    <script src="controllers/client-login.js"></script>
+    <script src="controllers/client-navbar.js"></script>
+    <script src="controllers/client-signup.js"></script>
+
+    <script src="services/client-employee.js"></script>
+    <script src="services/client-auth.js"></script>
+
+    <script src="js/ui-dom.js"></script>
+</body>
+</html>
