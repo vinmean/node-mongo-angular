@@ -13,14 +13,6 @@ var bodyParser = require('body-parser');
 
 // Configuration
 var config = require('./lib/server-config.js');
-
-// Models
-var models = require('./lib/models')
-, User = models.User(config);
-console.log(User);
-
-var ServerAuth = require('./lib/server-auth.js');
-var _auth = new ServerAuth(User, config);
 var app = express();
 
 // view engine setup
@@ -30,8 +22,9 @@ var app = express();
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,19 +34,11 @@ app.use(express_session({
     saveUninitialized: true
 }));
 
-// initialize authentication
-_auth.init(app);
+config.registerApi(app);
 
 app.get('/', function (req, res) {
     res.sendFile('index.html', { root: __dirname + "/public" });
 });
-
-// routes related to sign up and authentication
-_auth.authGoogle(app);
-_auth.authGoogleCallback(app);
-_auth.loggedInUserApi(app);
-_auth.logoutApi(app);
-_auth.signUpApi(app);
 
 function errorHandler(err, req, res, next) {
     console.log(err);
@@ -63,8 +48,8 @@ function errorHandler(err, req, res, next) {
 
 app.use(errorHandler);
 
-app.set('port', process.env.PORT || 4000);
+app.set('port',config.server.port);
 
-app.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + app.get('port'));
+app.listen(config.server.port, config.server.ip, function () {
+    console.log('Express server listening on ' + config.server.ip + ' port ' + app.get('port'));
 });

@@ -1,2 +1,5 @@
 node_modules
 *.njsproj
+bin
+obj
+.ntvs_analysis.dat

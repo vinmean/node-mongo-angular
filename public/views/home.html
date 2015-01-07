@@ -3,14 +3,14 @@
     <div class="panel-heading">
       {{headingTitle}}
       <div class="pull-right">
-        <input class="search" type="text" ng-model="query.name" placeholder="Search...">
+        <input class="search" type="text" ng-model="query.lastName" placeholder="Search...">
       </div>
     </div>
     <div class="panel-body">
       <div class="row show-list">
-        <div class="col-xs-4 col-md-3" ng-repeat="emp in employees | filter:query | orderBy:'name':true">
+        <div class="col-xs-4 col-md-3" ng-repeat="emp in employees | filter:query | orderBy:'lastName':true">
           <div class="text-center">
-            <a href="/employees/{{emp._id}}">{{emp.name}}</a>
+            <a href="/employees/{{emp._id}}">{{emp.lastName + ', ' + emp.firstName}}</a>
           </div>
         </div>
       </div>
