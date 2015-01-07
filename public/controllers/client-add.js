@@ -14,7 +14,6 @@ angular.module('EmpApp')
                 photoSrc: $scope.photoSrc
             },
             function () {
-                $scope.firstName = '';
                 $scope.addForm.$setPristine();
                 $alert({
                     title: 'Employee Add',
@@ -25,11 +24,11 @@ angular.module('EmpApp')
                 });
             },
             function (err) {
-                $scope.firstName = '';
+                console.log(err);
                 $scope.addForm.$setPristine();
                 $alert({
-                    title: err.title,
-                    content: err.message,
+                    title: err.data.title,
+                    content: err.data.message,
                     placement: 'top-right',
                     type: 'danger',
                     duration: 3
