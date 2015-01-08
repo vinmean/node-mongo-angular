@@ -7,7 +7,6 @@ var express = require('express');
 var express_session = require('express-session');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -21,7 +20,7 @@ var app = express();
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
+app.use(config.logger());
 //http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
@@ -34,7 +33,7 @@ app.use(express_session({
     saveUninitialized: true
 }));
 
-config.registerApi(app);
+config.api.registerApi(app);
 
 app.get('/', function (req, res) {
     res.sendFile('index.html', { root: __dirname + "/public" });
