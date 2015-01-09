@@ -27,11 +27,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express_session({
-    secret: '8d02bcc5e844a073f04d84119c96254a',
-    resave: false,
-    saveUninitialized: true
-}));
+app.use(config.session);
 
 config.api.registerApi(app);
 
