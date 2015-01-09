@@ -1,4 +1,4 @@
-var app = angular.module('EmpApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'angularFileUpload']); 
+var app = angular.module('EmpApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'angularFileUpload', 'ui.bootstrap']); 
 
 var loginRequired = ['$alert','AuthService', function ($alert, AuthService) {
         return AuthService.loggedInUser(function onError(err) {
