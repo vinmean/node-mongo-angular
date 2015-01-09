@@ -8,14 +8,69 @@
         </div>
         <div class="panel-body">
             <div id="slides_control">
-                <div class="slide-show ">
+                <div>
                     <carousel interval="slideInterval">
                         <slide ng-repeat="emp in employees| filter:query | orderBy:'lastName':true" active="slide.active">
                             <a href="/employees/{{emp._id}}">
-                                <img class="media-object img-rounded" ng-src="{{emp.photoSrc}}">
-                                <div class="carousel-caption">
-                                    {{emp.lastName + ', ' + emp.firstName}}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label class="col-xs-12 control-label">{{emp.lastName + ', ' + emp.firstName}}</label>
+                                    </div>
                                 </div>
+                                <div class="row slide-show">
+                                    <div class="col-xs-2">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <img class="media-object img-rounded" ng-src="{{emp.photoSrc}}">
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="home.firstName" class="col-xs-2 control-label">First Name</label>
+                                                <div class="col-xs-10">
+                                                    <input class="form-control" type="text" id="home.firstName" name="firstName" ng-model="emp.firstName" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="home.lastName" class="col-xs-2 control-label">Last Name</label>
+                                                <div class="col-xs-10">
+                                                    <input class="form-control" type="text" id="home.lastName" name="lastName" ng-model="emp.lastName" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="home.email" class="col-xs-2 control-label">Email</label>
+                                                <div class="col-xs-10">
+                                                    <input class="form-control" type="email" id="home.email" name="email" ng-model="emp.email" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="home.twitter" class="col-xs-2 control-label">Twitter</label>
+                                                <div class="col-xs-10">
+                                                    <input class="form-control" type="url" id="home.twitter" name="emp.twitter" ng-model="twitter" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="home.linkedIn" class="col-xs-2 control-label">LinkedIn</label>
+                                                <div class="col-xs-10">
+                                                    <input class="form-control" type="url" id="home.linkedIn" name="linkedIn" ng-model="emp.linkedIn" readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="home.facebook" class="col-xs-2 control-label">Facebook</label>
+                                                <div class="col-xs-10">
+                                                    <input class="form-control" type="url" id="home.facebook" name="facebook" ng-model="emp.facebook" readonly="readonly">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                    </div>
+                                </div>
+                                <!--
+        <div class="carousel-caption">
+
+        </div>
+        -->
                             </a>
                         </slide>
                     </carousel>
