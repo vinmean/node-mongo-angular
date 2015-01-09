@@ -7,14 +7,16 @@
             </div>
         </div>
         <div class="panel-body">
-            <div ng-controller="CarouselDemoCtrl" id="slides_control">
-                <div>
-                    <carousel interval="myInterval">
-                        <slide ng-repeat="emp in employees" active="slide.active">
-                            <img ng-src="{{emp.photoSrc}}">
-                            <div class="carousel-caption">
-                                <h4>{{emp.lastName + ', ' + emp.firstName}}</h4>
-                            </div>
+            <div id="slides_control">
+                <div class="slide-show ">
+                    <carousel interval="slideInterval">
+                        <slide ng-repeat="emp in employees| filter:query | orderBy:'lastName':true" active="slide.active">
+                            <a href="/employees/{{emp._id}}">
+                                <img class="media-object img-rounded" ng-src="{{emp.photoSrc}}">
+                                <div class="carousel-caption">
+                                    {{emp.lastName + ', ' + emp.firstName}}
+                                </div>
+                            </a>
                         </slide>
                     </carousel>
                 </div>

@@ -5062,14 +5062,11 @@ img-photo {
   max-height: 250px;
   max-width: 1100px; }
 
-#slides_control > div {
-  height: 200px; }
-
-#slides_control {
-  position: absolute;
-  width: 400px;
-  left: 50%;
-  top: 20px;
-  margin-left: -200px; }
+.slide-show {
+  margin-left: auto;
+  margin-right: auto;
+  height: 200px;
+  width: 200px;
+  top: 20px; }
 
 /*# sourceMappingURL=style.css.map */
