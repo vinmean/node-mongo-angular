@@ -3,3 +3,5 @@ node_modules
 bin
 obj
 .ntvs_analysis.dat
+*.sln
+*.suo
