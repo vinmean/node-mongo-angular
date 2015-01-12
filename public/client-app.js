@@ -37,6 +37,10 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
                 console.log('Unauthorized. Redirect to login');
                 $location.path('/login');
             }
+            else {
+                console.log('Unknown error');
+                $location.path('/login');
+            }
         });
     }]);
 
