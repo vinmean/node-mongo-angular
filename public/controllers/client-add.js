@@ -1,5 +1,5 @@
 angular.module('EmpApp')
-  .controller('AddCtrl', ['$scope', '$alert', 'Employee', function ($scope, $alert, Employee) {
+  .controller('AddCtrl', ['$scope', '$location', '$alert', 'Employee', function ($scope, $location, $alert, Employee) {
         $scope.hidePhoto = true;
         $scope.addEmployee = function () {
             Employee.save({
@@ -22,6 +22,7 @@ angular.module('EmpApp')
                     type: 'success',
                     duration: 3
                 });
+                $location.path('/');
             },
             function (err) {
                 console.log(err);

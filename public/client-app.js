@@ -3,14 +3,23 @@ var app = angular.module('EmpApp', ['ngCookies', 'ngResource', 'ngMessages', 'ng
 var loginRequired = ['$alert','AuthService', function ($alert, AuthService) {
         return AuthService.loggedInUser(function onError(err) {
             console.log(err);
-            
-            $alert({
-                title: err.title,
-                content: err.message,
-                placement: 'top-right',
-                type: 'danger',
-                duration: 3
-            });
+            if (err && err.title) {
+                $alert({
+                    title: err.title,
+                    content: err.message,
+                    placement: 'top-right',
+                    type: 'danger',
+                    duration: 3
+                });
+            } else {
+                $alert({
+                    title: 'Unknown Error',
+                    content: 'Unexpected error occuured',
+                    placement: 'top-right',
+                    type: 'danger',
+                    duration: 3
+                });
+            }
         });
     }]
 
