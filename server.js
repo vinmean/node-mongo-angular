@@ -21,13 +21,25 @@ var app = express();
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(config.logger());
-//http://stackoverflow.com/questions/19917401/node-js-express-request-entity-too-large
+
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(config.session);
+
+//redirect to https if https is to be used
+app.use(function (req, res, next) {
+    if (config.useHttps) {
+        if (req.headers['x-forwarded-proto'] == 'http') {
+            res.redirect('https://' + req.headers.host + req.path);
+        } else {
+            return next();
+        }
+    } else {
+        next();
+    }
+});
 
 config.api.registerApi(app);
 

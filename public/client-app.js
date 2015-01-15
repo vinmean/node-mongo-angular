@@ -1,16 +1,28 @@
-var app = angular.module('EmpApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'angularFileUpload', 'ui.bootstrap']); 
+var app = angular.module('EmpApp', ['ngCookies', 'ngResource', 'ngMessages', 'ngRoute', 'mgcrea.ngStrap', 'angularFileUpload', 'ui.bootstrap']);
 
-var loginRequired = ['$alert','AuthService', function ($alert, AuthService) {
+var loginRequired = ['$alert', '$rootScope', 'AuthService', function ($alert, $rootScope, AuthService) {
         return AuthService.loggedInUser(function onError(err) {
             console.log(err);
+            
             if (err && err.title) {
-                $alert({
-                    title: err.title,
-                    content: err.message,
-                    placement: 'top-right',
-                    type: 'danger',
-                    duration: 3
-                });
+                if ($rootScope.currentUser) {
+                    $rootScope.currentUser = null;
+                    $alert({
+                        title: 'Session Expired',
+                        content: 'Please login again',
+                        placement: 'top-right',
+                        type: 'danger',
+                        duration: 3
+                    });
+                } else {
+                    $alert({
+                        title: err.title,
+                        content: err.message,
+                        placement: 'top-right',
+                        type: 'danger',
+                        duration: 3
+                    });
+                }
             } else {
                 $alert({
                     title: 'Unknown Error',
@@ -32,7 +44,7 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
         $rootScope.$on('$routeChangeError', function (event, current, previous, eventObj) {
             console.log('route change error triggered');
             console.log(eventObj);
-
+            
             if (eventObj.status === 401) {
                 console.log('Unauthorized. Redirect to login');
                 $location.path('/login');
@@ -50,7 +62,7 @@ app.config(['$locationProvider', '$routeProvider', function ($locationProvider, 
           .when('/', {
             templateUrl: 'views/home.html',
             controller: 'MainCtrl',
-            resolve:{activeLogin: loginRequired}
+            resolve: { activeLogin: loginRequired }
         })
           .when('/login', {
             templateUrl: 'views/login.html',
