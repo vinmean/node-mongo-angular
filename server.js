@@ -1,4 +1,4 @@
-﻿// read environment variables
+// read environment variables
 var env = require('node-env-file');
 env(__dirname + '/process.env');
 
@@ -41,6 +41,7 @@ app.use(csrf())
 
 //redirect to https if https is to be used
 app.use(function (req, res, next) {
+    console.log("Use HTTPS = " + config.useHttps);
     if (config.useHttps) {
         if (req.headers['x-forwarded-proto'] == 'http') {
             res.redirect('https://' + req.headers.host + req.path);
