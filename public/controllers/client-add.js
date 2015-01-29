@@ -48,17 +48,6 @@ angular.module('EmpApp')
                         $scope.hidePhoto = false;
                     });
                 }
-            //fileReader.onload = function (e) {
-            //    $upload.http({
-            //        url: 'upload',
-            //        headers: { 'Content-Type': file.type },
-            //        data: e.target.result
-            //    }).then(function (response) {
-            ////success;
-            //    }, null, function (evt) {
-            //        $scope.progress[index] = parseInt(100.0 * evt.loaded / evt.total);
-            //    });
-            //}
             }
         };
   }]);

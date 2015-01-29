@@ -22,6 +22,26 @@
             <li data-match-route="/$"><a href="/">Home</a></li>
             <li data-match-route="/add"><a href="/add">Add</a></li>
         </ul>
+        <ul class="nav navbar-nav" ng-if="currentUser">
+            <li>
+                <div>
+                    <form ng-class="{focus:focus}" class="docs-search" ng-submit="search()">
+                        <div dropdown>
+                            <span class="glyphicon glyphicon-search search-icon" dropdown-toggle></span>
+                            <input class="search-query"
+                                   ng-model="searchModel.searchText"
+                                   placeholder="{{searchModel.searchLabel}}"
+                                   ng-focus="focus=true" ng-blur="focus=false">
+                            <ul class="dropdown-menu" role="menu">
+                                <li ng-repeat="so in searchModel.searchOpts">
+                                    <a ng-click="changeSearch(so.title, so.type)">{{so.label}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </li>
+        </ul>
         <ul class="nav navbar-nav pull-right" ng-if="currentUser">
             <li class="navbar-text" ng-bind="currentUser.email"></li>
             <li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>

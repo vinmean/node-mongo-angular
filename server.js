@@ -28,6 +28,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(config.session);
 
+config.reverseProxy(app);
+
+// CSRF protection
+var csrf = require('csurf');
+app.use(csrf())
+.use(function (req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.locals.csrftoken = req.csrfToken();
+    next();
+})
+
 //redirect to https if https is to be used
 app.use(function (req, res, next) {
     if (config.useHttps) {
@@ -40,6 +51,26 @@ app.use(function (req, res, next) {
         next();
     }
 });
+
+app.use(function (err, req, res, next) {
+    if (err.code !== 'EBADCSRFTOKEN') return next(err)
+    
+    console.log(req.headers);
+
+    // handle CSRF token errors here
+    req.session.error = {
+        title: 'CSRF Violation', 
+        message: 'Session has expired or request tampered with', 
+        code: 403
+    };
+
+    if (req.xhr) {
+        res.status(403).json(req.session.error);
+    }
+    else {
+        next(err);
+    }
+})
 
 config.api.registerApi(app);
 
