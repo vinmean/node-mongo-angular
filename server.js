@@ -25,7 +25,6 @@ app.use(config.logger());
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(config.session);
 
 config.reverseProxy(app);
@@ -72,8 +71,6 @@ app.use(function (err, req, res, next) {
     }
 })
 
-config.api.registerApi(app);
-
 app.get('/', function (req, res) {
     if (config.useHttps) {
         if (!req.secure){
@@ -84,6 +81,10 @@ app.get('/', function (req, res) {
     }
     res.sendFile('index.html', { root: __dirname + "/public" });
 });
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+config.api.registerApi(app);
 
 function errorHandler(err, req, res, next) {
     console.log(err);
