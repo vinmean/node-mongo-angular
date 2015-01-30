@@ -40,8 +40,8 @@ app.use(csrf())
 })
 
 //redirect to https if https is to be used
-app.use(function (req, res, next) {
-    console.log("Use HTTPS = " + config.useHttps);
+function redirectToHttps(req, res, next){
+        console.log("Use HTTPS = " + config.useHttps);
     if (config.useHttps) {
         console.log('protocol = ' + req.headers['x-forwarded-proto']);
         if (req.headers['x-forwarded-proto'] === 'http') {
@@ -54,7 +54,8 @@ app.use(function (req, res, next) {
     } else {
         next();
     }
-});
+}
+app.use(redirectToHttps);
 
 app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
@@ -78,7 +79,7 @@ app.use(function (err, req, res, next) {
 
 config.api.registerApi(app);
 
-app.get('/', function (req, res) {
+app.get('/',redirectToHttps, function (req, res) {
     res.sendFile('index.html', { root: __dirname + "/public" });
 });
 
