@@ -78,7 +78,7 @@ app.get('/', function (req, res) {
     if (config.useHttps) {
         if (!req.secure){
             var url = 'https://' + req.headers.host + req.path;
-            console.log('redirect url = ' + url);
+            console.log('default redirect url = ' + url);
             return res.redirect(url);
         } 
     }
@@ -87,8 +87,14 @@ app.get('/', function (req, res) {
 
 function errorHandler(err, req, res, next) {
     console.log(err);
-    res.status(401);
-    res.sendFile('index.html', { root: __dirname + "/public" });
+    if (config.useHttps) {
+        if (!req.secure){
+            var url = 'https://' + req.headers.host;
+            console.log('default error redirect url = ' + url);
+            return res.redirect(url);
+        } 
+    }
+    return res.redirect('http://' + req.headers.host);
 }
 
 app.use(errorHandler);
