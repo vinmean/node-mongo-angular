@@ -43,8 +43,11 @@ app.use(csrf())
 app.use(function (req, res, next) {
     console.log("Use HTTPS = " + config.useHttps);
     if (config.useHttps) {
-        if (req.headers['x-forwarded-proto'] == 'http') {
-            res.redirect('https://' + req.headers.host + req.path);
+        console.log('protocol = ' + req.headers['x-forwarded-proto']);
+        if (req.headers['x-forwarded-proto'] === 'http') {
+            var url = 'https://' + req.headers.host + req.path;
+            console.log('redirect url = ' + url);
+            res.redirect(url);
         } else {
             return next();
         }
