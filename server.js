@@ -41,19 +41,14 @@ app.use(csrf())
 
 //redirect to https if https is to be used
 function redirectToHttps(req, res, next){
-        console.log("Use HTTPS = " + config.useHttps);
     if (config.useHttps) {
-        console.log('protocol = ' + req.headers['x-forwarded-proto']);
-        if (req.headers['x-forwarded-proto'] === 'http') {
+        if (!req.secure){
             var url = 'https://' + req.headers.host + req.path;
             console.log('redirect url = ' + url);
-            res.redirect(url);
-        } else {
-            return next();
-        }
-    } else {
-        next();
+            return res.redirect(url);
+        } 
     }
+    next();
 }
 app.use(redirectToHttps);
 
@@ -79,7 +74,14 @@ app.use(function (err, req, res, next) {
 
 config.api.registerApi(app);
 
-app.get('/',redirectToHttps, function (req, res) {
+app.get('/', function (req, res) {
+    if (config.useHttps) {
+        if (!req.secure){
+            var url = 'https://' + req.headers.host + req.path;
+            console.log('redirect url = ' + url);
+            return res.redirect(url);
+        } 
+    }
     res.sendFile('index.html', { root: __dirname + "/public" });
 });
 
