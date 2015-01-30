@@ -71,14 +71,7 @@ app.use(function (err, req, res, next) {
     }
 })
 
-app.get('/', function (req, res) {
-    if (config.useHttps) {
-        if (!req.secure){
-            var url = 'https://' + req.headers.host + req.path;
-            console.log('default redirect url = ' + url);
-            return res.redirect(url);
-        } 
-    }
+app.get('/', redirectToHttps, function (req, res) {
     res.sendFile('index.html', { root: __dirname + "/public" });
 });
 
@@ -88,14 +81,18 @@ config.api.registerApi(app);
 
 function errorHandler(err, req, res, next) {
     console.log(err);
-    if (config.useHttps) {
-        if (!req.secure){
-            var url = 'https://' + req.headers.host;
-            console.log('default error redirect url = ' + url);
-            return res.redirect(url);
-        } 
+    if (req.xhr) {
+        req.session.error = (req.session.error)? req.session.error: {
+            title: 'Unknown Error', 
+            message: 'Requested operation cannot be performed', 
+            code: 404
+        };
+        res.status(404).json(req.session.error);
     }
-    return res.redirect('http://' + req.headers.host);
+    else {
+        res.status(404);
+        res.sendFile('index.html', { root: __dirname + "/public" });
+    }
 }
 
 app.use(errorHandler);
