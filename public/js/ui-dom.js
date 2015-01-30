@@ -5,8 +5,6 @@
 
     var x = 0;
     var y = 0;
-    console.log('img.width = ' + img.width);
-    console.log('img.height = ' + img.height);
 
     if (img.width < width) {
         x = (width - img.width) / 2;
@@ -17,10 +15,6 @@
         y = (height - img.height) / 2;
         height = img.height
     }
-    
-    console.log('x = ' + x);
-    console.log('y = ' + y);
-    console.log('width = ' + width);
-    console.log('height = ' + height);
+
     context.drawImage(img, x, y, width, height);
 }
