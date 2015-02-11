@@ -1,4 +1,8 @@
-﻿function drawPhoto(canvasId,img, width, height){
+﻿var empApp = empApp || {};
+
+empApp.uidom = empApp.uidom || {};
+
+empApp.uidom.drawPhoto = function (canvasId, img, width, height){
     var canvas = document.getElementById(canvasId);
     var context = canvas.getContext('2d');
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -13,7 +17,7 @@
 
     if (img.height < height) {
         y = (height - img.height) / 2;
-        height = img.height
+        height = img.height;
     }
 
     context.drawImage(img, x, y, width, height);
