@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 
 // Configuration
 var config = require('./lib/server-config.js');
+var AppError = require('./lib/util/server-error.js');
 var app = express();
 
 // view engine setup
@@ -39,13 +40,13 @@ app.use(csrf())
 })
 
 //redirect to https if https is to be used
-function redirectToHttps(req, res, next){
+function redirectToHttps(req, res, next) {
     if (config.useHttps) {
-        if (!req.secure){
+        if (!req.secure) {
             var url = 'https://' + req.headers.host + req.path;
             console.log('redirect url = ' + url);
             return res.redirect(url);
-        } 
+        }
     }
     next();
 }
@@ -55,14 +56,14 @@ app.use(function (err, req, res, next) {
     if (err.code !== 'EBADCSRFTOKEN') return next(err)
     
     console.log(req.headers);
-
+    
     // handle CSRF token errors here
-    req.session.error = {
-        title: 'CSRF Violation', 
-        message: 'Session has expired or request tampered with', 
-        code: 403
-    };
-
+    req.session.error = new AppError(
+        'CSRF Violation', 
+        'Session has expired or request tampered with', 
+        403
+    );
+    
     if (req.xhr) {
         res.status(403).json(req.session.error);
     }
@@ -82,11 +83,11 @@ config.api.registerApi(app);
 function errorHandler(err, req, res, next) {
     console.log(err);
     if (req.xhr) {
-        req.session.error = (req.session.error)? req.session.error: {
-            title: 'Unknown Error', 
-            message: 'Requested operation cannot be performed', 
-            code: 404
-        };
+        req.session.error = (req.session.error)? req.session.error: new AppError(
+            'Unknown Error', 
+            'Requested operation cannot be performed', 
+            404
+        );
         res.status(404).json(req.session.error);
     }
     else {
@@ -97,7 +98,7 @@ function errorHandler(err, req, res, next) {
 
 app.use(errorHandler);
 
-app.set('port',config.server.port);
+app.set('port', config.server.port);
 
 app.listen(config.server.port, config.server.ip, function () {
     console.log('Express server listening on ' + config.server.ip + ' port ' + app.get('port'));

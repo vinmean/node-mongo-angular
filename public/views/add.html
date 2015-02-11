@@ -16,7 +16,7 @@
                                  <!--popover="Drag n Drop photo here" popover-title="Photograph" popover-trigger="mouseenter" popover-placement="right">-->
                                 <div class="drop-box-no-border" bs-popover data-content="Drag n Drop photo here" data-title="Photograph" data-trigger="hover" data-placement="right">
                                     <img class="img-photo img-rounded" ng-src="{{photoSrc}}" hidden="hidden"
-                                         onload="drawPhoto('photoCanvas', this, 200, 200)" />
+                                         onload="empApp.uidom.drawPhoto('photoCanvas', this, 200, 200)" />
 
                                     <canvas id="photoCanvas" class="img-rounded" width="200" height="200" ng-hide="hidePhoto"></canvas>
                                 </div>

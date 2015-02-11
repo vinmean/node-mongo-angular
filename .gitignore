@@ -6,3 +6,4 @@ obj
 *.sln
 *.suo
 /.project
+npm-debug.log
